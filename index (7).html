@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scripti — Login</title>
+  <link rel="stylesheet" href="style.css?v=12" />
+</head>
+<body>
+  <div class="container" id="container">
+
+    <!-- SIGN UP -->
+    <div class="form-container sign-up-container" aria-hidden="true">
+      <form id="regForm" autocomplete="on">
+        <div class="brand">
+          <!-- file is in the same /login folder -->
+          <img class="brand-logo" src="scriptisvgblk.svg" alt="Scripti" />
+        </div>
+
+        <h1>Create Account</h1>
+        <span>Use your email for registration</span>
+
+        <div class="input-group">
+          <input id="reg-name" type="text" placeholder="Full Name" autocomplete="name" />
+          <div class="error-popup">Please fill in this field!</div>
+        </div>
+
+        <div class="input-group">
+          <input id="reg-email" type="email" placeholder="Email" autocomplete="email" />
+          <div class="error-popup">Please fill in this field!</div>
+        </div>
+
+        <div class="input-group">
+          <input id="reg-password" type="password" placeholder="Password" autocomplete="new-password" />
+          <div class="error-popup">Please fill in this field!</div>
+        </div>
+
+        <button type="submit">Sign Up</button>
+        <div class="form-message" id="regMsg" aria-live="polite"></div>
+
+        <div class="mobile-toggle">
+          Already have an account?
+          <a href="#" id="signInMobile">Sign In</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- SIGN IN -->
+    <div class="form-container sign-in-container" aria-hidden="false">
+      <form id="logForm" data-redirect="/app1/" autocomplete="on">
+        <div class="brand">
+          <img class="brand-logo" src="scriptisvgblk.svg" alt="Scripti" />
+        </div>
+
+        <h1>Sign in to Scripti</h1>
+        <span>Use your account credentials</span>
+
+        <div class="input-group">
+          <input id="log-email" type="email" placeholder="Email" autocomplete="email" />
+          <div class="error-popup">Please fill in this field!</div>
+        </div>
+
+        <div class="input-group">
+          <input id="log-password" type="password" placeholder="Password" autocomplete="current-password" />
+          <div class="error-popup">Please fill in this field!</div>
+        </div>
+
+        <a class="forgot" href="/forgot-password/">Forgot password?</a>
+
+        <button type="submit">Sign In</button>
+        <div class="form-message" id="logMsg" aria-live="polite"></div>
+
+        <div class="mobile-toggle">
+          New here?
+          <a href="#" id="signUpMobile">Create account</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- DESKTOP ONLY: RIGHT PANEL -->
+    <div class="overlay-container" aria-hidden="true">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome back</h1>
+          <p>Sign in to access your recorder and case-note workflow.</p>
+          <button class="ghost" id="signIn" type="button">Sign In</button>
+        </div>
+
+        <div class="overlay-panel overlay-right">
+          <h1>New to Scripti?</h1>
+          <p>Create an account to start capturing sessions and generating notes.</p>
+          <button class="ghost" id="signUp" type="button">Sign Up</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="script.js?v=12"></script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+:root{
+  /* PAGE BACKGROUND: soft light-blue gradient bottom -> top */
+  --page-bg-bottom:#cfefff;
+  --page-bg-top:#f4fbff;
+
+  /* LEFT FORM PANEL (blue): requested #007BFF */
+  --form-blue:#007BFF;
+  --form-bg-start:#1a8cff;  /* slight lift, same hue */
+  --form-bg-end:#007BFF;
+
+  /* RIGHT OVERLAY PANEL (default): requested #FF0099 but softer */
+  --overlay-pink-base:#FF0099;
+  --overlay-pink-start:#ff66c7; /* softer/lighter */
+  --overlay-pink-end:#ff2aa9;   /* still clearly #FF0099 family */
+
+  /* RIGHT OVERLAY PANEL (when signup active): medical red */
+  --overlay-red-start:#b00020;
+  --overlay-red-end:#7a0014;
+
+  --primary:#00d2ff;
+  --secondary:#3a7bd5;
+
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.78);
+
+  --border:rgba(0,0,0,.10);
+  --focus:rgba(255,255,255,.22);
+  --error:#ff4b2b;
+
+  --radius:16px;
+  --shadow:0 24px 70px rgba(0,0,0,.15);
+
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+
+body{
+  background:linear-gradient(0deg,var(--page-bg-bottom) 0%, var(--page-bg-top) 70%);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  font-family:var(--font);
+  overflow:hidden;
+  -webkit-text-size-adjust:100%;
+}
+
+.container{
+  /* DEFAULT overlay = pink (right panel) */
+  --overlay-start: var(--overlay-pink-start);
+  --overlay-end: var(--overlay-pink-end);
+
+  background:#fff;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+  width:768px;
+  max-width:95%;
+  min-height:520px;
+}
+
+/* When Create Account active: overlay becomes medical red (left panel after slide) */
+.container.right-panel-active{
+  --overlay-start: var(--overlay-red-start);
+  --overlay-end: var(--overlay-red-end);
+}
+
+/* DESKTOP TWO-PANEL LAYOUT */
+.form-container{
+  position:absolute;
+  top:0;
+  height:100%;
+  width:50%;
+  transition:transform .6s ease-in-out, opacity .6s ease-in-out;
+}
+
+.sign-in-container{ left:0; z-index:2; }
+.sign-up-container{ left:0; opacity:0; z-index:1; }
+
+.container.right-panel-active .sign-in-container{
+  transform:translateX(100%);
+  opacity:0;
+}
+
+.container.right-panel-active .sign-up-container{
+  transform:translateX(100%);
+  opacity:1;
+  z-index:5;
+}
+
+/* LEFT FORM PANEL COLOR (blue) */
+form{
+  background:linear-gradient(180deg,var(--form-bg-start),var(--form-bg-end));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:0 44px;
+  height:100%;
+  text-align:center;
+  color:var(--text);
+}
+
+/* Logo */
+.brand{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:10px;
+}
+.brand-logo{
+  height:30px;
+  width:auto;
+  display:block;
+  filter:
+    drop-shadow(0 2px 0 rgba(255,255,255,.85))
+    drop-shadow(0 8px 18px rgba(0,0,0,.18));
+}
+
+/* Text */
+h1{
+  font-weight:800;
+  font-size:24px;
+  color:var(--text);
+  line-height:1.15;
+}
+span{
+  font-size:12px;
+  color:var(--muted);
+  margin:10px 0;
+}
+
+/* Inputs */
+.input-group{
+  position:relative;
+  width:100%;
+  margin:8px 0;
+  padding-top:10px;
+}
+
+input{
+  background:#1a1a1a;
+  border:1px solid rgba(255,255,255,.18);
+  padding:12px 15px;
+  width:100%;
+  color:#fff;
+  border-radius:10px;
+  outline:none;
+  transition:border-color .15s ease, box-shadow .15s ease, transform .08s ease;
+  caret-color: var(--primary);
+}
+
+input::placeholder{ color:rgba(255,255,255,.45); }
+input:focus::placeholder{ color:rgba(255,255,255,.45); }
+
+input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px var(--focus);
+}
+input:active{ transform: translateY(1px); }
+
+/* Autofill signal */
+input:-webkit-autofill{
+  -webkit-text-fill-color:#fff;
+  transition: background-color 9999s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px #1a1a1a inset;
+  border:1px solid rgba(255,255,255,.18);
+  animation-name:onAutoFillStart;
+  animation-duration:1ms;
+}
+@keyframes onAutoFillStart{ from{} to{} }
+
+/* Validation popup */
+.error-popup{
+  display:none;
+  position:absolute;
+  top:0;
+  right:0;
+  background:var(--error);
+  color:#fff;
+  padding:6px 10px;
+  font-size:11px;
+  border-radius:6px;
+  white-space:nowrap;
+  pointer-events:none;
+}
+.error-popup::after{
+  content:"";
+  position:absolute;
+  top:100%;
+  right:10px;
+  border-width:6px;
+  border-style:solid;
+  border-color:var(--error) transparent transparent transparent;
+}
+.error-popup.show{ display:block; animation:fadeIn .18s ease; }
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(4px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* Buttons */
+button{
+  border-radius:22px;
+  border:none;
+  background:linear-gradient(to right, var(--primary), var(--secondary));
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  padding:12px 46px;
+  text-transform:uppercase;
+  cursor:pointer;
+  margin-top:15px;
+  transition:transform 80ms ease-in, filter .15s ease, opacity .15s ease;
+}
+button:hover{ filter:brightness(1.05); }
+button:active{ transform:scale(.96); }
+
+button.ghost{
+  background:transparent;
+  border:1px solid rgba(255,255,255,.92);
+  color:#fff;
+}
+
+button:disabled{ opacity:.55; cursor:not-allowed; }
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px var(--focus);
+  border-radius:12px;
+}
+
+/* Messages */
+.form-message{
+  min-height:16px;
+  margin-top:10px;
+  font-size:12px;
+  color:var(--error);
+}
+
+/* Forgot password */
+a.forgot{
+  color:#ffffff;
+  text-decoration:underline;
+  opacity:.95;
+  margin-top:8px;
+}
+a.forgot:hover{ opacity:1; }
+
+/* RIGHT PANEL (overlay) */
+.overlay-container{
+  position:absolute;
+  top:0;
+  left:50%;
+  width:50%;
+  height:100%;
+  overflow:hidden;
+  transition:transform .6s ease-in-out;
+  z-index:100;
+}
+
+.container.right-panel-active .overlay-container{
+  transform:translateX(-100%);
+}
+
+.overlay{
+  /* DEFAULT pink, ACTIVE medical red (via container vars) */
+  background:linear-gradient(135deg, var(--overlay-start), var(--overlay-end));
+  color:#fff;
+  position:relative;
+  left:-100%;
+  height:100%;
+  width:200%;
+  transform:translateX(0);
+  transition:transform .6s ease-in-out;
+}
+
+.container.right-panel-active .overlay{
+  transform:translateX(50%);
+}
+
+.overlay-panel{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:0 44px;
+  text-align:center;
+  top:0;
+  height:100%;
+  width:50%;
+}
+
+.overlay-left{ left:0; }
+.overlay-right{ right:0; }
+
+.overlay-panel p{
+  color:rgba(255,255,255,.92);
+  margin-top:10px;
+  line-height:1.35;
+  max-width: 30ch;
+}
+
+/* Mobile toggles */
+.mobile-toggle{ display:none; }
+
+/* MOBILE: single-screen slider (one screen, then slide) */
+@media (max-width: 700px){
+  body{
+    overflow:auto;
+    padding:18px;
+  }
+
+  .container{
+    width:94vw;
+    max-width:94vw;
+    min-height:78vh;
+  }
+
+  /* Hide desktop overlay on mobile */
+  .overlay-container{ display:none; }
+
+  .form-container{
+    width:100%;
+    left:0;
+  }
+
+  /* initial positions */
+  .sign-in-container{
+    transform:translateX(0);
+    opacity:1;
+    z-index:2;
+  }
+  .sign-up-container{
+    transform:translateX(100%);
+    opacity:1;
+    z-index:1;
+  }
+
+  /* active positions */
+  .container.right-panel-active .sign-in-container{
+    transform:translateX(-100%);
+    opacity:1;
+  }
+  .container.right-panel-active .sign-up-container{
+    transform:translateX(0);
+    opacity:1;
+    z-index:2;
+  }
+
+  form{
+    padding:34px 22px;
+  }
+
+  .mobile-toggle{
+    display:block;
+    margin-top:18px;
+    color:rgba(255,255,255,.88);
+  }
+  .mobile-toggle a{
+    color:#fff;
+    text-decoration:underline;
+    font-weight:800;
+  }
+
+  /* prevent popups from going off-screen */
+  .error-popup{
+    right:auto;
+    left:0;
+    max-width:100%;
+    white-space:normal;
+    text-align:left;
+  }
+  .error-popup::after{
+    right:auto;
+    left:14px;
+  }
+}
